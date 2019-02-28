@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header class="header">
-      <span class="title">Photo Editor</span>
+      <span class="title">Photo OCR</span>
       <navbar :data="data" @change="change"></navbar>
     </header>
     <main class="main">
@@ -34,6 +34,10 @@
         switch (action) {
           case 'crop':
             editor.crop();
+            break;
+
+          case 'ocr':
+            editor.ocr();
             break;
 
           case 'clear':

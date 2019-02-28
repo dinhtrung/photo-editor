@@ -20,6 +20,7 @@
   import Cropper from 'cropperjs';
 
   export default {
+
     props: {
       data: {
         type: Object,
@@ -246,6 +247,24 @@
             }).toDataURL(data.type),
           });
           this.stop();
+        }
+      },
+
+      // PERFORM OCR via TESSERACTJS
+      ocr() {
+        const { cropper, data } = this;
+        console.log('editor ocr() triggered');
+        if (data.cropping) {
+          this.croppedData = cropper.getData();
+          this.canvasData = cropper.getCanvasData();
+          this.cropBoxData = cropper.getCropBoxData();
+          var myImage = cropper.getCroppedCanvas(data.type === 'image/png' ? {} : {
+                      fillColor: '#fff',
+                    }).toDataURL(data.type);
+          window.Tesseract.recognize(myImage)
+          .then(function(result){
+              console.log('OCR:', result)
+          });
         }
       },
 
